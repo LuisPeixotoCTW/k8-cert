@@ -10,12 +10,14 @@ public class PublicKeySignerResource {
     @Produces(MediaType.TEXT_PLAIN)
 
     public String sign(@QueryParam("message") String msg) {
+        System.out.println(msg);
         try {
             KeySigner signKey = new KeySigner();
             byte[] signature = signKey.sign(msg);
             return new String(signature);
 
         } catch (Exception e) {
+            //e.printStackTrace();
             throw new WebApplicationException("Erro ao assinar a mensagem", e);
         }
     }

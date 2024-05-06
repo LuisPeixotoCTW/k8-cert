@@ -7,14 +7,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class GreetingResourceTest {
+class PublicKeySignerResourceTest {
     @Test
-    void testHelloEndpoint() {
+    void signersEndpoint() {
         given()
-          .when().get("/hello")
+          .when().get("/signers")
           .then()
-             .statusCode(200)
-             .body(is("Hello RESTEasy"));
+                //message é null, não tem nada então espera código 500 e não 200
+                // Alterar depois
+             .statusCode(500);
     }
-
 }
