@@ -4,7 +4,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 class PublicKeySignerResourceTest {
@@ -13,8 +12,9 @@ class PublicKeySignerResourceTest {
         given()
           .when().get("/signers")
           .then()
-                //message é null, não tem nada então espera código 500 e não 200
+                // message é null, não tem nada então espera código 500 e não 200
+                // Afinal para 401 uma vez que é preciso o token para poder assinar a chave
                 // Alterar depois
-             .statusCode(500);
+             .statusCode(401);
     }
 }

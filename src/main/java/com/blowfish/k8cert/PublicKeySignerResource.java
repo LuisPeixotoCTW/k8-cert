@@ -1,23 +1,22 @@
 package com.blowfish.k8cert;
 
-import jakarta.ws.rs.*;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
 
 @Path("/signers")
 public class PublicKeySignerResource {
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-
+    @RolesAllowed("admin")
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
     public String sign(@QueryParam("message") String msg) {
-        System.out.println(msg);
         try {
-            KeySigner signKey = new KeySigner();
+            PublicKeySignerImpl signKey = new PublicKeySignerImpl();
             byte[] signature = signKey.sign(msg);
             return new String(signature);
 
         } catch (Exception e) {
-            //e.printStackTrace();
             throw new WebApplicationException("Erro ao assinar a mensagem", e);
         }
     }
