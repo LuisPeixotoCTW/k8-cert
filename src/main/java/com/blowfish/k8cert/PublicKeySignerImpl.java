@@ -19,21 +19,10 @@ public class PublicKeySignerImpl implements PublicKeySigner {
         this.publicKey = pair.getPublic();
     }
 
-    public byte[] sign(String msg) throws Exception {
+    public byte[] sign(String publicKeyToSign) throws Exception {
         Signature rsa = Signature.getInstance(SIG_ALG);
         rsa.initSign(this.privateKey);
-        rsa.update(msg.getBytes());
+        rsa.update(publicKeyToSign.getBytes());
         return rsa.sign();
-    }
-
-    public boolean verify(String msg, byte[] signature) throws Exception {
-        Signature rsa = Signature.getInstance(SIG_ALG);
-        rsa.initVerify(this.publicKey);
-        rsa.update(msg.getBytes());
-        return rsa.verify(signature);
-    }
-
-    public PublicKey getPublicKey() {
-        return this.publicKey;
     }
 }
