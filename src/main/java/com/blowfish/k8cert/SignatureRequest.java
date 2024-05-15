@@ -1,16 +1,16 @@
 package com.blowfish.k8cert;
 
 public class SignatureRequest {
-    private String message;
+    private String publicKey;
     private String signature;
 
     // Getters and setters
-    public String getMessage() {
-        return message;
+    public String getPublicKey() {
+        return publicKey;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 
     public String getSignature() {

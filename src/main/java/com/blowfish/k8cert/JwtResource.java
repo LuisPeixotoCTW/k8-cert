@@ -8,7 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.enterprise.context.ApplicationScoped;
 
-@Path("/jwt")
+@Path("/access_token")
 @ApplicationScoped
 public class JwtResource {
 

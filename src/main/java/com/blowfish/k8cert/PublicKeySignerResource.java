@@ -17,7 +17,7 @@ import static io.vertx.ext.auth.impl.jose.JWS.verifySignature;
         bearerFormat = "JWT"
 )
 
-@Path("/signers")
+@Path("/sign")
 @ApplicationScoped
 public class PublicKeySignerResource {
 
@@ -51,7 +51,7 @@ public class PublicKeySignerResource {
     public String verify(SignatureRequest request) {
         try {
             byte[] signature = Base64.getDecoder().decode(request.getSignature());
-            boolean isValid = signer.verify(request.getMessage(), signature);
+            boolean isValid = signer.verify(request.getPublicKey(), signature);
             return isValid ? "Valid" : "Invalid";
         } catch (Exception e) {
             throw new WebApplicationException("Error verifying the signature", e);
