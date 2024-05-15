@@ -25,4 +25,15 @@ public class PublicKeySignerImpl implements PublicKeySigner {
         rsa.update(msg.getBytes());
         return rsa.sign();
     }
+
+    public boolean verify(String msg, byte[] signature) throws Exception {
+        Signature rsa = Signature.getInstance(SIG_ALG);
+        rsa.initVerify(this.publicKey);
+        rsa.update(msg.getBytes());
+        return rsa.verify(signature);
+    }
+
+    public PublicKey getPublicKey() {
+        return this.publicKey;
+    }
 }
