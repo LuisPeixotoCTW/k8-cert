@@ -23,6 +23,11 @@ public class PublicKeySignerImpl implements PublicKeySigner {
         Signature rsa = Signature.getInstance(SIG_ALG);
         rsa.initSign(this.privateKey);
         rsa.update(publicKeyToSign.getBytes());
-        return rsa.sign();
+        byte[] signature = rsa.sign();
+        rsa.initVerify(publicKey);
+        rsa.update(publicKeyToSign.getBytes());
+        boolean bool = rsa.verify(signature);
+        System.out.println(bool);
+        return signature;
     }
 }

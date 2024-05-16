@@ -29,7 +29,7 @@ public class PublicKeySignerResource {
     }
 
     @POST
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response sign(SignatureRequest request) {
