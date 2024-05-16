@@ -44,7 +44,7 @@ public class PublicKeySignerResource {
     @Path("/verify")
     @RolesAllowed("admin")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response verifySignature(VerificationRequest request) {
         try {
             PublicKey publicKey  = impl.getPublicKey();
@@ -52,7 +52,7 @@ public class PublicKeySignerResource {
             boolean isValid = impl.verify(publicKeySignedBytes, request.publicKeyToSign(), publicKey);
 
             if (isValid) {
-                return Response.ok().entity("Valid").build();
+                return Response.status(200).entity(new VerificationResponse(true)).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
