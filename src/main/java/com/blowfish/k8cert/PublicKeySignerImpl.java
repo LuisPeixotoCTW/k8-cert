@@ -3,8 +3,6 @@ package com.blowfish.k8cert;
 import java.security.*;
 
 public class PublicKeySignerImpl implements PublicKeySigner {
-    // client -> envia a chave publica (poderá verificar assinatura)
-    // server -> recebe chave publica de client e assina com a sua chave privada
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
     private static final String KPG_ALG = "RSA";
@@ -23,11 +21,19 @@ public class PublicKeySignerImpl implements PublicKeySigner {
         Signature rsa = Signature.getInstance(SIG_ALG);
         rsa.initSign(this.privateKey);
         rsa.update(publicKeyToSign.getBytes());
-        byte[] signature = rsa.sign();
-        rsa.initVerify(publicKey);
+        byte[] publicKeySigned = rsa.sign();
+        return publicKeySigned;
+    }
+
+    public boolean verify(byte[] publicKeySigned, String publicKeyToSign, PublicKey publicKey_not_real) throws Exception {
+        Signature rsa = Signature.getInstance(SIG_ALG);
+        rsa.initVerify(this.publicKey);
         rsa.update(publicKeyToSign.getBytes());
-        boolean bool = rsa.verify(signature);
-        System.out.println(bool);
-        return signature;
+        boolean verified = rsa.verify(publicKeySigned);
+        return verified;
+    }
+
+    public PublicKey getPublicKey() {
+        return this.publicKey;
     }
 }
